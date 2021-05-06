@@ -13,31 +13,16 @@ void main()
     printf("Introduce un segundo string:\n");
     scanf("%s", string2);
 
-    //printf("%s", (char)((char *)(&string1 + 1))[-1]);
-
-    //printf("%ld", sizeof(string1));
-    //printf("%ld", strlen(string1));
-
     printf("%d", strend(string1, string2));
-    //putchar((((char *)(&string1 + 1))[-1]));
-
-    //printf("%p\n", &string1);
-    //printf("%p", &string1 + 1);
-
-    //int *p = ((int *)(&string1 + 1))[-1];
-    //printf("*p = %d\n", *p);
 }
-
 
 int strend(char *s, char *t)
 {
-    char * last_s = s + strlen(s);
-    char * last_t = t + strlen(t);
-
-    while((last_s-- == last_t--))
-        ;
-    if(last_t != t)
+    if (!s || !t)
         return 0;
-    else
-        return 1;
+    size_t lenstr = strlen(s);
+    size_t lensuffix = strlen(t);
+    if (lensuffix >  lenstr)
+        return 0;
+    return strncmp(s + lenstr - lensuffix, t, lensuffix) == 0;
 }

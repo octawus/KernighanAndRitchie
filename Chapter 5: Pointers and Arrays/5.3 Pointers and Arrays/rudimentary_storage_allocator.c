@@ -1,15 +1,29 @@
-#define ALLOCSIZE 10000 /* size of available space */
+#include<stdio.h>
+
+#define ALLOCSIZE 100 /* size of available space */
 
 static char allocbuf[ALLOCSIZE]; /*storage for alloc*/
 static char *allocp = allocbuf; /*next free position*/
 
+char * alloc(int);
+void afree(char *);
+
 void main(){
 
-    
+    char * ptr = allocbuf;
 
+    char * name = alloc(10);
+    char * surname = alloc(10);
+
+    name = "Mihai";
+    surname = "Stanescu";
+
+    printf("%s %s\n", name, surname);
+    afree(surname);
+    printf("%s %s\n", name, surname);
 }
 
-char *alloc(int n) /*return pointer to n characters*/
+char * alloc(int n) /*return pointer to n characters*/
 {
     if(allocbuf + ALLOCSIZE - allocp >= n){
         allocp += n;
