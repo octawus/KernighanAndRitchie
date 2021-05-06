@@ -1,4 +1,4 @@
-../obj/string_processing.o: string_processing.c \
+../obj/string_processing.o: utils/string_processing.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
