@@ -1,24 +1,23 @@
-TARGET  = $(BIN_DIR)/arrays_and_pointers_fooling_around.out
+TARGET1 = $(BIN_DIR)/tcp_client.out
+TARGET2 = $(BIN_DIR)/tcp_server.out
 OBJ_DIR = ../obj
 BIN_DIR = ../bin
 SRC_DIR = .
 UTILS_DIR = ./utils
 INC_DIR = ../inc
-OBJS    = $(OBJ_DIR)/string_processing.o\
-	      $(OBJ_DIR)/arrays_and_pointers_fooling_around.o
+OBJS1  = $(OBJ_DIR)/tcp_client.o
+OBJS2  = $(OBJ_DIR)/tcp_server.o
 CFLAGS  = -Wall -I $(INC_DIR)
 
-
-$(TARGET): $(OBJS)
+$(TARGET1): $(OBJS1)
 	mkdir -p $(BIN_DIR)
-	gcc $(CFLAGS) $(OBJS) -o $(TARGET)
+	gcc $(CFLAGS) $(OBJS1) -o $(TARGET1)
 
-#string_processing.o: string_processing.c ../Headers/string_processing.h
+$(TARGET2): $(OBJS2)
+	mkdir -p $(BIN_DIR)
+	gcc $(CFLAGS) $(OBJS2) -o $(TARGET2)
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
-	gcc -c -MD $(CFLAGS) $< -o $@
-
-$(OBJ_DIR)/%.o : $(UTILS_DIR)/%.c
 	mkdir -p $(OBJ_DIR)
 	gcc -c -MD $(CFLAGS) $< -o $@
 
