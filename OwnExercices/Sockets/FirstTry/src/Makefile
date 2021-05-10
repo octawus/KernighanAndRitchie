@@ -9,17 +9,17 @@ OBJS1  = $(OBJ_DIR)/tcp_client.o
 OBJS2  = $(OBJ_DIR)/tcp_server.o
 CFLAGS  = -Wall -I $(INC_DIR)
 
-$(TARGET1): $(OBJS1)
-	mkdir -p $(BIN_DIR)
-	gcc $(CFLAGS) $(OBJS1) -o $(TARGET1)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	mkdir -p $(OBJ_DIR)
+	gcc -c -MD $(CFLAGS) $< -o $@
 
 $(TARGET2): $(OBJS2)
 	mkdir -p $(BIN_DIR)
 	gcc $(CFLAGS) $(OBJS2) -o $(TARGET2)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
-	gcc -c -MD $(CFLAGS) $< -o $@
+$(TARGET1): $(OBJS1)
+	mkdir -p $(BIN_DIR)
+	gcc $(CFLAGS) $(OBJS1) -o $(TARGET1)
 
 -include $(OBJ_DIR)*.d
 

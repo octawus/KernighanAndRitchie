@@ -1,0 +1,37 @@
+all: decrement_letter_server.out receiving_client.out sender_client.out
+
+TARGET1 = $(BIN_DIR)/decrement_letter_server.out
+TARGET2 = $(BIN_DIR)/receiving_client.out
+TARGET3 = $(BIN_DIR)/sender_client.out
+OBJ_DIR = ../obj
+BIN_DIR = ../bin
+SRC_DIR = .
+UTILS_DIR = ./utils
+INC_DIR = ../inc
+OBJS1  = $(OBJ_DIR)/decrement_letter_server.o
+OBJS2  = $(OBJ_DIR)/receiving_client.o
+OBJS3  = $(OBJ_DIR)/sender_client.o
+CFLAGS  = -Wall -I $(INC_DIR)
+
+
+$(TARGET1): $(OBJS1)
+	mkdir -p $(BIN_DIR)
+	gcc $(CFLAGS) $(OBJS1) -o $(TARGET1)
+
+$(TARGET2): $(OBJS2)
+	mkdir -p $(BIN_DIR)
+	gcc $(CFLAGS) $(OBJS2) -o $(TARGET2)
+
+$(TARGET3): $(OBJS3)
+	mkdir -p $(BIN_DIR)
+	gcc $(CFLAGS) $(OBJS3) -o $(TARGET3)
+
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	mkdir -p $(OBJ_DIR)
+	gcc -c -MD $(CFLAGS) $< -o $@
+
+-include $(OBJ_DIR)*.d
+
+.PHONY : clean
+clean:
+	@rm -r $(OBJ_DIR) $(BIN_DIR)

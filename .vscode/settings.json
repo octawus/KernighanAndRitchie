@@ -4,6 +4,10 @@
         "ctype.h": "c",
         "cstdio": "c",
         "string_procesing.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "stdlib.h": "c",
+        "in.h": "c",
+        "errno.h": "c",
+        "error_t.h": "c"
     }
 }
