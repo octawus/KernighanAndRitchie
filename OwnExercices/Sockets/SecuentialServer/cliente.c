@@ -21,7 +21,7 @@ and types, and declares miscellaneous functions.*/
 #define SERVER_ADDRESS "192.168.0.22"
 #define PORT            8080
 
-char buf_tx[] = "Hello server. I am client";
+char buf_tx[100];
 char buf_rx[100];
 
 int main()
@@ -47,7 +47,7 @@ int main()
     serveraddr.sin_addr.s_addr = inet_addr( SERVER_ADDRESS );
     serveraddr.sin_port = htons(PORT);
 
-    scanf(buf_tx);
+    
 
     /* try to connect the client socket to server socket */
     if (connect(sockfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr)) != 0)
