@@ -28,6 +28,7 @@ and types, and declares miscellaneous functions.*/
 #define BUFFER_SZ 2048
 #define NAME_LEN 32
 
+/*For _Atomic: https://en.cppreference.com/w/c/language/atomic*/
 static _Atomic unsigned int cli_count = 0;;
 static int uid = 10;
 
@@ -40,13 +41,16 @@ typedef struct{
     char name[NAME_LEN];
 } client_t;
 
-
-/* TODO: Implement this array with a Singly Linked List
+/* TODO: Implement this array (and everything related to it) 
+with a Singly Linked List
 Posible documentation:
 https://www.geeksforgeeks.org/data-structures/linked-list/singly-linked-list/
 https://www.hackerearth.com/practice/data-structures/linked-list/singly-linked-list/tutorial/
 https://www.geeksforgeeks.org/linked-list-set-1-introduction/
 */
+/*Static arrays get initialized to 0*/
+/*The array is made with pointer to structs so that functions can operate over the same
+array.*/
 client_t *clients[MAX_CLIENTS];
 
 /*Initializae a mutex to default parameters.
@@ -83,7 +87,7 @@ unlocking can be done with the equivalent of a test-and-set instruction
 
 A default (``fast'') mutex usually does not record or check thread 
 ownership. This means that mutex locked by one thread can unlock 
-by another thread (This problem is solved by the "error cheking")
+by another thread (This problem is solved by the "error cheking" type)
 */
 
 pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -105,6 +109,8 @@ void str_trim_lf(char* arr, int lenght){
     }
 }
 
+/*The ! operator only return True if the operand is 0*/
+
 void queue_add(client_t * cl){
     pthread_mutex_lock(&clients_mutex);
 
@@ -114,7 +120,6 @@ void queue_add(client_t * cl){
             break;
         }
     }
-
     pthread_mutex_unlock(&clients_mutex);
 }
 
@@ -134,6 +139,8 @@ void queue_remove(int uid){
     pthread_mutex_unlock(&clients_mutex);
 }
 
+
+
 void send_message(char* s, int uid)
 {
     pthread_mutex_lock(&clients_mutex);
@@ -141,7 +148,7 @@ void send_message(char* s, int uid)
         if(clients[i]){
             if(clients[i] -> uid != uid){
                 if(write(clients[i] -> sockfd, s, strlen(s)) < 0){
-                    printf("ERROR: write to descriptor failer\n");
+                    printf("[SERVER-error]: write to descriptor failed\n");
                     break;
                 }
             }
@@ -150,7 +157,7 @@ void send_message(char* s, int uid)
     pthread_mutex_unlock(&clients_mutex);
 }
 
-/*Example to understand this funtion
+/*Example to understand this function
 Lets suppose s_addr 192.168.123.43 =
 11000000.10101000.01111011.00101011
 
@@ -193,7 +200,7 @@ void print_ip_addr(struct sockaddr_in addr){
             (addr.sin_addr.s_addr & 0xff000000) >> 24);
 }
 
-void *handle_client(void *arg){
+void* handle_client(void *arg){
     char buffer[BUFFER_SZ];
     char name[NAME_LEN];
     int leave_flag = 0;
@@ -201,7 +208,7 @@ void *handle_client(void *arg){
 
     client_t *cli = (client_t*)arg;
 
-    //Name
+    // Name
     if(recv(cli -> sockfd, name, NAME_LEN, 0) <= 0 || strlen(name) < 2 || strlen(name) >= NAME_LEN - 1){
         printf("[SERVER-error]: Write a valid name \n");
         leave_flag = 1;
@@ -339,9 +346,9 @@ int main(int argc, char **argv)
         cli -> sockfd = connfd;
         cli -> uid = uid++;
 
-        // Add client ot queue
+        // Add client to queue
         queue_add(cli);
-        pthread_create(&tid, NULL, &handle_client, (void *)cli);
+        pthread_create(&tid, NULL, handle_client, (void *)cli);
 
         // Reduce CPU usage
         sleep(1);
