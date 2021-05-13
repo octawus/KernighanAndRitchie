@@ -330,7 +330,9 @@ int main(int argc, char **argv)
     while(1){
         socklen_t clilen = sizeof(cli_addr);
         connfd = accept(listenfd, (struct sockaddr*)&cli_addr, &clilen);
-
+        if(connfd == -1){
+            printf("[SERVER-error]: Could not accept the connection: %d: %s \n", errno, strerror( errno ));
+        }
         //Check for max client.
         if((cli_count + 1) == MAX_CLIENTS){
             printf("[SERVER-warning]: Maximum number of clients reached. Connection rejected\n");
