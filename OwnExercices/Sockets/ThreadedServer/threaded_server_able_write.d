@@ -1,5 +1,5 @@
-threaded_server.o: threaded_server.c /usr/include/stdc-predef.h \
- /usr/include/unistd.h /usr/include/features.h \
+threaded_server_able_write.o: threaded_server_able_write.c \
+ /usr/include/stdc-predef.h /usr/include/unistd.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \

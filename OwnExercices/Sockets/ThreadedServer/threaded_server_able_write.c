@@ -139,8 +139,6 @@ void queue_remove(int uid){
     pthread_mutex_unlock(&clients_mutex);
 }
 
-
-
 void send_message(char* s, int uid)
 {
     pthread_mutex_lock(&clients_mutex);
@@ -254,12 +252,16 @@ void* handle_client(void *arg){
 void handle_connections(void *arg){
     int connfd = 0;
     struct sockaddr_in cli_addr;
+    pthread_t tid;
+    
 
-    int listenfd = (int) arg;
+    int *listenfd = (int *)arg;
 
-    socklen_t clilen = sizeof(cli_addr);
+    while (1)
+    {
+        socklen_t clilen = sizeof(cli_addr);
 
-        connfd = accept(listenfd, (struct sockaddr*)&cli_addr, &clilen);
+        connfd = accept(*listenfd, (struct sockaddr*)&cli_addr, &clilen);
         if(connfd == -1){
             printf("[SERVER-error]: Could not accept the connection: %d: %s \n", errno, strerror( errno ));
         }
@@ -268,7 +270,6 @@ void handle_connections(void *arg){
             printf("[SERVER-warning]: Maximum number of clients reached. Connection rejected\n");
             print_ip_addr(cli_addr);
             close(connfd);
-            continue;
         }
 
         //Client Settings
@@ -282,6 +283,32 @@ void handle_connections(void *arg){
         queue_add(cli);
         pthread_create(&tid, NULL, handle_client, (void *)cli);
 
+    }   
+}
+
+void send_msg_handler(){
+    char buffer[BUFFER_SZ] = {};
+    char message[BUFFER_SZ + NAME_LEN + 2] = {};
+    char name[NAME_LEN] = "Server";
+
+    while (1)
+    {
+
+        str_overwrite_stdout();
+        fgets(buffer, BUFFER_SZ, stdin);
+        str_trim_lf(buffer, BUFFER_SZ);
+
+        if(strcmp(buffer, "exit") == 0){
+            break;
+        } else {
+            sprintf(message, "%s: %s\n", name, buffer);
+            send_message(message, 0);
+        }
+
+        bzero(buffer, BUFFER_SZ);
+        bzero(message, BUFFER_SZ + NAME_LEN);
+    }
+     //catch_ctrl_c_and_exit(2);
 }
 
 int main(int argc, char **argv)
@@ -297,8 +324,8 @@ int main(int argc, char **argv)
 
     int option = 1;
     int listenfd = 0;
+    int *plistenfd = &listenfd;
     struct  sockaddr_in serv_addr;
-    pthread_t tid;
 
     /* If signal SIGPIPE reaches this process, ignore.
     A SIGPIPE is sent to a process if it tried to write 
@@ -361,8 +388,14 @@ int main(int argc, char **argv)
     printf("|==========| WELCOME TO THE CHAT |==========|\n");
 
     pthread_t connection_thread;
-    if((err = pthread_create(&connection_thread, NULL, (void*)handle_connections, (void *) listenfd)) != 0){
+    if((err = pthread_create(&connection_thread, NULL, (void*)handle_connections, (void *) plistenfd)) != 0){
         printf("[SERVER-error]: Error during conection handling: %d: %s\n", errno, strerror( errno ));
+        return EXIT_FAILURE;
+    }
+
+    pthread_t message_thread;
+    if((err = pthread_create(&message_thread, NULL, (void*)send_msg_handler, NULL)) != 0){
+        printf("[SERVER-error]: Error during message broadcast handling: %d: %s\n", errno, strerror( errno ));
         return EXIT_FAILURE;
     }
 
