@@ -21,9 +21,6 @@ int main(){
         if(char_per_line > 0){
             c = tolower(c);
         }
-        if(isprint(c) == 0 ){
-            c = 
-        }
         char_per_line++;
         putchar(c);
         if(c == '\n'){
