@@ -67,6 +67,7 @@ void recv_msg_handler(){
     {
         int receive = recv(sockfd, message, BUFFER_SZ, 0);
         if(receive > 0){
+            str_overwrite_stdout();
             printf("%s", message);
             str_overwrite_stdout();
         }else if (receive == 0){
@@ -74,8 +75,6 @@ void recv_msg_handler(){
         }
         bzero(message, BUFFER_SZ);
     }
-    
-
 }
 
 void send_msg_handler(){
@@ -84,7 +83,6 @@ void send_msg_handler(){
 
     while (1)
     {
-
         str_overwrite_stdout();
         fgets(buffer, BUFFER_SZ, stdin);
         str_trim_lf(buffer, BUFFER_SZ);
