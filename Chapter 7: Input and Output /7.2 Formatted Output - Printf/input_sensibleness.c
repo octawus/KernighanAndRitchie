@@ -11,20 +11,29 @@ int main(){
     
     while((c = getchar()) != EOF)
     {   
-        if(char_per_line == MAX_CHAR_PER_LINE){
-            putchar('\n');
-            char_per_line = 0;
+        if(iscntrl(c) || c == ' ')
+        {
+            /* non-graphic or blank character */
+            printf("\\%03o",c);
+            if(c == '\n'){
+                char_per_line = 0;
+                putchar('\n');
+            }
         }
-        if(char_per_line == 0){
-            c = toupper(c);
-        }
-        if(char_per_line > 0){
-            c = tolower(c);
-        }
-        char_per_line++;
-        putchar(c);
-        if(c == '\n'){
-            char_per_line = 0;
+        else{
+            if(char_per_line == MAX_CHAR_PER_LINE){
+                printf("\\%03o",'\n');
+                putchar('\n');
+                char_per_line = 0;
+            }
+            if(char_per_line == 0){
+                c = toupper(c);
+            }
+            if(char_per_line > 0){
+                c = tolower(c);
+            }
+            char_per_line++;
+            putchar(c);
         }
     }
 
