@@ -55,12 +55,8 @@ struct cat_list {
 	struct _Cat *lh_first;	//first element			
 }cats
 
-Basically same automatization as before but, given that 
-this is the first element, no elemetn exist before him, 
-so a new macro is needed. Also here you name the list.  
-
-So, in the end, the macro just makes this struct a "first node"
-in a list.
+Creates the actual list. The inner struct holds the pointer to the
+first element.l
 */ 
 
 LIST_HEAD(dog_list, _Dog) dogs;
