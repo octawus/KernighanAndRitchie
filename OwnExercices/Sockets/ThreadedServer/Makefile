@@ -1,4 +1,4 @@
-all: threaded_server_able_write.out threaded_server.out client.out 
+all: threaded_server_able_write_list.out threaded_server_able_write.out threaded_server.out client.out 
 
 threaded_server.out: threaded_server.o
 	gcc $(CFLAGS) -pthread threaded_server.o -o threaded_server.out -lpthread
@@ -18,8 +18,14 @@ threaded_server_able_write.out: threaded_server_able_write.o
 threaded_server_able_write.o : threaded_server_able_write.c
 	gcc -c -MD $(CFLAGS) threaded_server_able_write.c -o threaded_server_able_write.o 
 
+threaded_server_able_write_list.out: threaded_server_able_write_list.o
+	gcc $(CFLAGS) -pthread threaded_server_able_write_list.o -o threaded_server_able_write_list.out -lpthread
+
+threaded_server_able_write_list.o : threaded_server_able_write_list.c
+	gcc -c -MD $(CFLAGS) threaded_server_able_write_list.c -o threaded_server_able_write_list.o 
+
 -include $(OBJ_DIR)*.d
 
 .PHONY : clean
 clean:
-	@rm threaded_server.d threaded_server.o threaded_server.out client.d client.o client.out threaded_server_able_write.d threaded_server_able_write.o threaded_server_able_write.out
+	@rm threaded_server.d threaded_server.o threaded_server.out client.d client.o client.out threaded_server_able_write.d threaded_server_able_write.o threaded_server_able_write.out threaded_server_able_write_list.d threaded_server_able_write_list.o threaded_server_able_write_list.out

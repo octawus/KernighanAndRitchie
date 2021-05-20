@@ -10,6 +10,15 @@ struct Node {
     struct list_head list_member;
 };
 
+/*
+Assign memory to nodePtr, then insert the data passed as argument into
+it.
+After that, the new node pointer are initialized to point to itself.
+Finally, we add the element at the end of the list.
+THIS IS NOT TRIVIAL!!!!
+*/
+
+
 void add_node(char *nameArg, int ageArg, struct list_head *head){
     struct Node *nodePtr = (struct Node *)malloc(sizeof(struct Node));
     assert(nodePtr != NULL);
