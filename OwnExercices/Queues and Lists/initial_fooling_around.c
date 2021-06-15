@@ -45,7 +45,7 @@ typedef struct _Dog {
         char can_swim;
 } Dog;
 
-/*Declare funtions (later defined), to create new cats and dogs*/
+/*Declare functions (later defined), to create new cats and dogs*/
 Cat *create_cat(char *name, int color, char can_climb);
 Dog *create_dog(char *name, int color, char can_swim);
 
@@ -92,7 +92,7 @@ int main()
 	        
             (cat1)->pointers.le_prev = &(&cats)->lh_first;	
 
-        } while (/*CONSTCOND0) //Coment CONSTCOND0!!!
+        } while (/*CONSTCOND0) //Comment CONSTCOND0!!!
         */
 
         LIST_INSERT_HEAD(&cats, cat2, pointers);
@@ -122,21 +122,21 @@ int main()
 }
 
 /*The following explanation stands true for both creation methods.
-Acept as parameters a name, a color and a can_climb caracteristic.
+Accept as parameters a name, a color and a can_climb characteristics.
 
-The create a pointer to a Cat (so that the cat is accesible from
-outside the function) and asign memory if size Cat struct.
+The create a pointer to a Cat (so that the cat is accessible from
+outside the function) and assign memory if size Cat struct.
 
-Then copy the name acepted as a parameter to the name inside 
+Then copy the name accepted as a parameter to the name inside
 the new struct.
 
 Same for other parameters.
 
 3 invocations of this method should result in a memory 
-state like the folowing. (supose sizeof(Cat/Dog) is 300 bytes
+state like the following. (suppose sizeof(Cat/Dog) is 300 bytes
 and sizeof(*cat) is 8 bytes -for 64 bits systems-)
 
----------------------------BEGINING OF MEMORY----------------------
+---------------------------BEGINNING OF MEMORY----------------------
 ...................................................................
 ...................................................................
 0x1000 -> pointer to Cat struct (*cat1 -> 0x5000)

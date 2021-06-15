@@ -1,8 +1,6 @@
 /* The <unistd.h> header defines miscellaneous symbolic constants
 and types, and declares miscellaneous functions.*/
 #include <unistd.h>
-/*Definitions for network database operations*/
-#include <netdb.h>
 /*Internet address family*/
 #include <netinet/in.h>
 /*Main sockets header*/
@@ -33,7 +31,7 @@ and types, and declares miscellaneous functions.*/
 LIST_HEAD(hnode);
 
 /*For _Atomic: https://en.cppreference.com/w/c/language/atomic*/
-static _Atomic unsigned int cli_count = 0;;
+static _Atomic unsigned int cli_count = 0;
 static int uid = 10;
 
 //Client structure

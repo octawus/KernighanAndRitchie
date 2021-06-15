@@ -1,0 +1,16 @@
+/home/teldat/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7442.42/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/teldat/Escritorio/The C Programming Language"
+-- Configuring done
+CMake Error at CMakeLists.txt:10 (add_executable):
+  Cannot find source file:
+
+    Chapter 1: A tutorial Introduction/1.1 Getting Started/hello_world.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+  .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .ispc
+
+
+CMake Error at CMakeLists.txt:10 (add_executable):
+  No SOURCES given to target: The_C_Programming_Language
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.

@@ -1,0 +1,3 @@
+/home/teldat/Escritorio/The C Programming Language/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/teldat/Escritorio/The C Programming Language/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/teldat/Escritorio/The C Programming Language/cmake-build-debug/CMakeFiles/The_C_Programming_Language.dir
